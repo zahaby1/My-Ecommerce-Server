@@ -1,8 +1,8 @@
 import  { config } from 'dotenv'
 config()
 import express from 'express'
-import { setupSwagger } from './swagger.js';
 import { Dbconnection } from './DB/connection.js'
+import { setupSwagger } from './swagger.js';
 import categoryRouter from './routes/category.routes.js'
 import brandRouter from './routes/brand.routes.js'
 import productRouter from './routes/product.routes.js'
@@ -16,6 +16,7 @@ const app=express()
 const port=process.env.PORT || 3000
 app.use(express.json())
 app.use(cors())
+Dbconnection()
 
 app.use("/category",verifyToken,isAdmin,categoryRouter)
 app.use("/brand",verifyToken,isAdmin,brandRouter)
@@ -24,7 +25,6 @@ app.use("/orders",verifyToken,isAdmin,orderRouter)
 app.use("/customer",verifyToken,customerRouter)
 app.use("/auth",userRouter)
 
-Dbconnection()
 
 
 setupSwagger(app);
