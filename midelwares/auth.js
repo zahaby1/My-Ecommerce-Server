@@ -6,7 +6,7 @@ export const verifyToken=async(req,res,next)=>{
     if (!token) {
         return res.status(400).json({message:"invalid token"})
     }
-    const {id}= jwt.verify(token,process.env.secret_key)
+    const {id}= jwt.verify(token,process.env.SECRET_KEY)
     const user=await usermodel.findById(id)
     req.user=user
     next()

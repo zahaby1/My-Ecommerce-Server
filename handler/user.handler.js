@@ -10,9 +10,9 @@ try {
         return res.status(403).json({message:"this email is already exist"})
     }
     if (name &&email && password) {
-        const hashpass=await bycrpt.hash(password,+process.env.private_num)
+        const hashpass=await bycrpt.hash(password,+process.env.PRIVATE_NUM)
         const user= await usermodel.create({name,email,password:hashpass,isAdmin})
-        const token= jwt.sign({email, id:user._id},process.env.secret_key,{expiresIn:"1d"})
+        const token= jwt.sign({email, id:user._id},process.env.SECRET_KEY,{expiresIn:"1d"})
         return res.status(200).json({message:"sign success",user,token})
     }
     return res.status(403).json({message:"faild sign up"})
@@ -40,7 +40,7 @@ try {
     console.log(ismatch);
     
     if (ismatch) {
-        const token= jwt.sign({email, id:user._id},process.env.secret_key,{expiresIn:"1d"})
+        const token= jwt.sign({email, id:user._id},process.env.SECRET_KEY,{expiresIn:"1d"})
         return res.status(200).json({message:"login success",token,user})  
     }
     return res.status(403).json({message:"faild sign up"})
