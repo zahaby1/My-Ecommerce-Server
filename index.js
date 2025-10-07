@@ -1,6 +1,8 @@
 import  { config } from 'dotenv'
 config()
+
 import express from 'express'
+import cors from 'cors'
 import { Dbconnection } from './DB/connection.js'
 import { setupSwagger } from './swagger.js';
 import categoryRouter from './routes/category.routes.js'
@@ -9,13 +11,14 @@ import productRouter from './routes/product.routes.js'
 import customerRouter from './routes/customers.routes.js'
 import userRouter from './routes/user.routes.js'
 import orderRouter from './routes/orders.routes.js'
-import cors from 'cors'
 import { isAdmin, verifyToken } from './midelwares/auth.js'
 import { AppError } from './Utils/AppError.js'
 const app=express()
 const port=process.env.PORT || 3000
+
 app.use(express.json())
 app.use(cors())
+
 Dbconnection()
 
 app.use("/category",verifyToken,isAdmin,categoryRouter)
